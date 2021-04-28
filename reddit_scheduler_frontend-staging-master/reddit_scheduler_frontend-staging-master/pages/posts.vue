@@ -72,6 +72,7 @@
             <th class="text-left">Posted</th>
             <th class="text-left">Submission Id</th>
             <th class="text-left">Error</th>
+            <th class="text-left">Deleted</th>
           </tr>
         </thead>
         <tbody>
@@ -86,6 +87,7 @@
             <td>{{ item.posted ? 'Yes' : 'No'}}</td>
             <td><a :href="postUrl(item)" target="_blank">{{ item.submissionName }}</a></td>
             <td>{{ item.error }}</td>
+            <td>{{ (Math.floor(Math.random() * 2) == 1) ? 'Yes' : 'No'}}</td>
           </tr>
         </tbody>
       </template>
@@ -337,7 +339,7 @@ export default {
     },
     postUrl(post){
       const postId = post.submissionName.split('_')[1];
-      return `https://reddit.com${post.subreddit}/comments/${postId}`;
+      return `https://reddit.com/r/${post.subreddit}/comments/${postId}`;
     },
 
     closeAddUpdateDialog(){
