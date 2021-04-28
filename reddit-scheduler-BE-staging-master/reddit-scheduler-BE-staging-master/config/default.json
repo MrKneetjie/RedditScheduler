@@ -64,7 +64,7 @@
   "mongodb": "mongodb+srv://root:QFovMHNW6kXiDLBy@main.td2bc.mongodb.net/reddit_scheduler_staging?retryWrites=true&w=majority",
   "redditClientId": "Xc_jVVwUqldDIg",
   "redditClientSecret": "ga-QWzY9qPj28rcjT_20VoiD3QkBAA",
-  "redditCallbackUri": "https://onlybands.xyz/reddit_api/oauth_callback",
-  "frontendUri": "https://onlybands.xyz/scheduler"
+  "redditCallbackUri": "http://localhost:3030/oauth_callback",
+  "frontendUri": "http://localhost:3000/scheduler"
 
 }

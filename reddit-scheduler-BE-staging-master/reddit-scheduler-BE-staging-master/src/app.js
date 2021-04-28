@@ -28,7 +28,7 @@ app.configure(configuration());
 app.use(helmet({
   contentSecurityPolicy: false
 }));
-app.use(cors());
+app.use(cors({origin: 'http://localhost:3000'}));
 app.use(compress());
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -66,22 +66,22 @@ app.get('/verify', function (req, res) {
       'Content-Type': 'application/json'
     }
 
-    axios.post('https://onlybands.xyz/reddit_api/authManagement', JSON.stringify(obj), {
+    axios.post('http://localhost:3030/authManagement', JSON.stringify(obj), {
       headers: headers
     })
     .then((response) => {
-      res.redirect(`https://onlybands.xyz/scheduler/verify?verified=true`);
+      res.redirect(`http://localhost:3000/scheduler/verify?verified=true`);
     })
     .catch((error) => {
       console.log(error)
-      res.redirect(`https://onlybands.xyz/scheduler/verify?verified=false`);
+      res.redirect(`http://localhost:3000/scheduler/verify?verified=false`);
     })
  
-  //res.redirect(`https://onlybands.xyz/scheduler/verify?token=${req.query.token}`);
+  //res.redirect(`http://localhost:3000/scheduler/verify?token=${req.query.token}`);
 })
 app.get('/reset', function (req, res) {
   console.log(req.query.token)
-  res.redirect(`https://onlybands.xyz/scheduler/reset?token=${req.query.token}`);
+  res.redirect(`http://localhost:3000/scheduler/reset?token=${req.query.token}`);
 })
 
 

@@ -1,7 +1,7 @@
 module.exports = function(app) {
 
     function getLink(type, hash) {
-      const url = 'https://onlybands.xyz/reddit_api/' + type + '?token=' + hash
+      const url = 'http://localhost:3030/' + type + '?token=' + hash
       return url
     }
   
