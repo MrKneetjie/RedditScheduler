@@ -64,8 +64,30 @@ const linkPostSubmit = async (app, post) => {
   return postResult;
 };
 
+const deletedPostSubmit = async (app, post) => {
+  
+  const postResult = { _id: post._id || '', updates: {} };
+  if(!post.account){
+    postResult.updates.error = 'account not exists: ' + post.account;
+    return postResult;
+  }
+  const r = new snoowrap({...defaultRedditClient(app), refreshToken: post.account.refreshToken});
+  try {
+    const submission = await r.getSubmission(post.submissionName);
+    console.log(submission);
+    postResult.updates.submissionName = submission.name + "works";
+    // postResult.updates.deleted = true;
+  }
+  catch(err){
+    postResult.updates.error = err.message;
+  }
+  
+  return postResult;
+};
+
 module.exports = {
   getRedditAccessToken,
   getMyRedditAccountInfo,
-  linkPostSubmit
+  linkPostSubmit,
+  deletedPostSubmit
 };

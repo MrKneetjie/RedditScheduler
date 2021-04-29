@@ -21,7 +21,8 @@ module.exports = function (app) {
     error: { type: String },
     user: { type: Schema.Types.ObjectId, ref: 'Users' },
     account: { type: Schema.Types.ObjectId, ref: 'Accounts' },
-    posted: { type: Boolean, default: false }
+    posted: { type: Boolean, default: false },
+    deleted: { type: Boolean, default: false }
   }, {
     timestamps: true
   });

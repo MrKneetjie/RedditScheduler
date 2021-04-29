@@ -1,4 +1,5 @@
 const { linkPostSubmit } = require('./reddit');
+const { deletedPostSubmit } = require('./reddit');
 const { uploadBase64 } = require('./imgur');
 
 const sleep = seconds => new Promise(resolve => setTimeout(resolve, seconds * 1000));
@@ -32,6 +33,13 @@ const submitPosts = (app, posts) => {
   return Promise.all(tasks);
 };
 
+const submitDeletedPosts = (app, posts) => {
+  const tasks = [];
+  for(let post of posts)
+    tasks.push(deletedPostSubmit(app, post).catch(err => console.log(err)));
+  return Promise.all(tasks);
+};
+
 const savePostResults = (app, postResults) => {
   const tasks = [];
   for(let postResult of postResults)
@@ -39,7 +47,15 @@ const savePostResults = (app, postResults) => {
   return Promise.all(tasks);
 };
 
+const updateDeleted = (app, deletedPosts) => {
+  const tasks = [];
+  for(let postResult of deletedPosts)
+    tasks.push(app.service('posts').patch(postResult._id, postResult.updates));
+  return Promise.all(tasks);
+};
+
 const start = async (app) => {
+  update(app);
   while(true){
     const posts = await app.service('posts').find({ 
       query: { 
@@ -53,6 +69,28 @@ const start = async (app) => {
     const postResults = await submitPosts(app, posts.data || posts);
     await savePostResults(app, postResults);
     await sleep(100);
+  }
+};
+
+const update = async (app) => {
+  while(true){
+    const posts = await app.service('posts').find({ 
+      query: { 
+        $limit: 50,
+        posted: true
+        // deleted: false
+      } 
+    }); 
+    let deletedPosts = posts;
+    // for(let post of posts) {
+    //   if(deletedapi(post) == true) {
+    //     deletedPosts.push(post);
+    //   }
+    // }
+    const postResults = await submitDeletedPosts(app, deletedPosts.data || deletedPosts);
+    await updateDeleted(app, postResults);
+    // Check every 5 minutes
+    await sleep(1000*60*5);
   }
 };
 
