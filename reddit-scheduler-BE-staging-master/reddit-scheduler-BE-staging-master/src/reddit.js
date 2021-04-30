@@ -65,7 +65,6 @@ const linkPostSubmit = async (app, post) => {
 };
 
 const deletedPostSubmit = async (app, post) => {
-  
   const postResult = { _id: post._id || '', updates: {} };
   if(!post.account){
     postResult.updates.error = 'account not exists: ' + post.account;
@@ -73,8 +72,13 @@ const deletedPostSubmit = async (app, post) => {
   }
   const r = new snoowrap({...defaultRedditClient(app), refreshToken: post.account.refreshToken});
   try {
-    const result = await r.getSubmission(post.submissionName).author.name;
-    if(result == "[deleted]" || result == "[removed]") {
+    const name = await r.getSubmission(post.submissionName).author.name;
+    const indexable = await r.getSubmission(post.submissionName).is_robot_indexable;
+    console.log(indexable);
+    if (indexable == false) {
+      postResult.updates.deleted = true;
+    }
+    if(name == "[deleted]" || name == "[removed]") {
       postResult.updates.deleted = true;
     }
   }
