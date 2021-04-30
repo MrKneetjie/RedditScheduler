@@ -47,13 +47,6 @@ const savePostResults = (app, postResults) => {
   return Promise.all(tasks);
 };
 
-const updateDeleted = (app, deletedPosts) => {
-  const tasks = [];
-  for(let postResult of deletedPosts)
-    tasks.push(app.service('posts').patch(postResult._id, postResult.updates));
-  return Promise.all(tasks);
-};
-
 const start = async (app) => {
   update(app);
   while(true){
@@ -81,14 +74,8 @@ const update = async (app) => {
         // deleted: false
       } 
     }); 
-    let deletedPosts = posts;
-    // for(let post of posts) {
-    //   if(deletedapi(post) == true) {
-    //     deletedPosts.push(post);
-    //   }
-    // }
-    const postResults = await submitDeletedPosts(app, deletedPosts.data || deletedPosts);
-    await updateDeleted(app, postResults);
+    const postResults = await submitDeletedPosts(app, posts.data || posts);
+    await savePostResults(app, postResults);
     // Check every 5 minutes
     await sleep(1000*60*5);
   }

@@ -84,10 +84,10 @@
             <td><img :src="item.imageUrl" height="77"/></td>
             <td>{{ item.subreddit }}</td>
             <td>{{ $moment(item.postAt).format('MMM Do YYYY, h:mm a') }}</td>
-            <td>{{ item.posted ? 'Yes' : 'No'}}</td>
+            <td>{{ item.posted ? 'Yes' : 'No' }}</td>
             <td><a :href="postUrl(item)" target="_blank">{{ item.submissionName }}</a></td>
             <td>{{ item.error }}</td>
-            <td>{{ (Math.floor(Math.random() * 2) == 1) ? 'Yes' : 'No'}}</td>
+            <td>{{ item.deleted ? 'Yes' : 'No' }}</td>
           </tr>
         </tbody>
       </template>
