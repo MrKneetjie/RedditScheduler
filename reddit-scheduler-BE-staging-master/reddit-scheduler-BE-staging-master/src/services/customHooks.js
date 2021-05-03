@@ -181,6 +181,21 @@ const imageUpload = async context => {
     });
 };
 
+const cleanAccount = context => {
+  try {
+    // Delete all shit code here
+    for(let item in context.params.user) {
+      console.log(item);
+    }
+    context.result = "Succes";
+  }
+  catch(err) {
+    console.log(err);
+    context.result = "Failed";
+  }
+  return context;
+};
+
 module.exports = {
   aggregate,
   addUser,
@@ -196,6 +211,6 @@ module.exports = {
   sortCreatedDesc,
   preventQuotasPatch,
   userQuotasUsage,
-  isExist
-
+  isExist,
+  cleanAccount
 };

@@ -37,6 +37,7 @@
             <th class="text-left">Username</th>
             <th class="text-left">Access Token</th>
             <th class="text-left">Refresh Token</th>
+            <th class="text-left">Clean</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@
             <td>{{ item.username }}</td>
             <td>{{ item.accessToken }}</td>
             <td>{{ item.refreshToken }}</td>
+            <td @click="clean(item)">X</td>
           </tr>
         </tbody>
       </template>
@@ -59,6 +61,7 @@ import Pagination from '@/mixins/Pagination';
 import AccountsMixin from '@/mixins/AccountsMixin';
 import AccountAddUpdateDialog from '@/components/AccountAddUpdateDialog';
 import Message from '@/components/Message';
+import feathersClient from "@/plugins/feathers";
 
 export default {
 
@@ -145,8 +148,12 @@ export default {
         .catch(err => {
           this.$store.commit('showMessage', { type: 'error', text: err.message });
         });
-    }
+    },
 
+    clean(acc){
+      feathersClient.service('accounts').get(acc).then(data => console.log(data));
+      // Maybe popup succes ? idk
+    }
   }
 }
 
