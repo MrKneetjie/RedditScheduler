@@ -66,9 +66,6 @@ const linkPostSubmit = async (app, post) => {
 };
 
 const cleanFullAccount = async (app, account) => {
-  console.log("username: " + account.username);
-  console.log("accesToken: " + account.accesToken);
-  console.log("refreshToken: " + account.refreshToken);
   const r = new snoowrap({...defaultRedditClient(app), refreshToken: account.refreshToken});
   try {
     const result = await r.getUser(account.username).getSubmissions().then(submissions => { 
@@ -84,10 +81,14 @@ const cleanFullAccount = async (app, account) => {
         element.delete();
       }
     });
+
+    return "Succes";
   }
   catch(err){
     // IF 400 ACC PROBABLY BANNED OR REMOVED
-    console.log(err.message);
+    // console.log(err.message);
+
+    return "Failed";
   }
 };
 

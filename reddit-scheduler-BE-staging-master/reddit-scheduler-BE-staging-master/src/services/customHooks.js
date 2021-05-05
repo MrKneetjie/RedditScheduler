@@ -181,14 +181,10 @@ const imageUpload = async context => {
     });
 };
 
-const cleanAccount = context => {
-  try {
-    cleanFullAccount(context.app, context.data);
-  }
-  catch(err) {
-    console.log(err);
-    context.result = "Failed";
-  }
+const cleanAccount = async context => {
+  const result = await cleanFullAccount(context.app, context.data);
+  context.result = result;
+
   return context;
 };
 

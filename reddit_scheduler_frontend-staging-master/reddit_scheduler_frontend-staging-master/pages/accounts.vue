@@ -46,7 +46,7 @@
             <td>{{ item.username }}</td>
             <td>{{ item.accessToken }}</td>
             <td>{{ item.refreshToken }}</td>
-            <td @click="clean(item)">X</td>
+            <td @click="clean(item)">{{ item.cleaned ? 'O' : 'X' }}</td>
           </tr>
         </tbody>
       </template>
@@ -151,11 +151,8 @@ export default {
     },
 
     clean(acc){
-      console.log(acc.username);
-      console.log(acc.accessToken);
-      console.log(acc.refreshToken);
       feathersClient.service('accounts').patch(acc, { username: acc.username, accesToken: acc.accessToken, refreshToken: acc.refreshToken }).then(data => console.log(data));
-      // Maybe popup succes ? idk
+      acc.cleaned = true;
     }
   }
 }
