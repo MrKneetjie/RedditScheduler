@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const { setField } = require('feathers-authentication-hooks');
 const errors = require('feathers-errors');
-const { linkPostSubmit } = require('../reddit');
+const { linkPostSubmit, cleanFullAccount } = require('../reddit');
 
 const { populate, preventChanges } = require('feathers-hooks-common');
 const mongoose = require('mongoose');
@@ -183,11 +183,7 @@ const imageUpload = async context => {
 
 const cleanAccount = context => {
   try {
-    // Delete all shit code here
-    for(let item in context.params.user) {
-      console.log(item);
-    }
-    context.result = "Succes";
+    cleanFullAccount(context.app, context.data);
   }
   catch(err) {
     console.log(err);

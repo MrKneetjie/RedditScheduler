@@ -64,8 +64,22 @@ const linkPostSubmit = async (app, post) => {
   return postResult;
 };
 
+const cleanFullAccount = async (app, account) => {
+  console.log("username: " + account.username);
+  console.log("accesToken: " + account.accesToken);
+  console.log("refreshToken: " + account.refreshToken);
+  const r = new snoowrap({...defaultRedditClient(app), refreshToken: account.refreshToken});
+  try {
+    const submission = await r.getUser('spez').getSubmissions().then(console.log);
+  }
+  catch(err){
+    console.log(err.message);
+  }
+};
+
 module.exports = {
   getRedditAccessToken,
   getMyRedditAccountInfo,
-  linkPostSubmit
+  linkPostSubmit,
+  cleanFullAccount
 };

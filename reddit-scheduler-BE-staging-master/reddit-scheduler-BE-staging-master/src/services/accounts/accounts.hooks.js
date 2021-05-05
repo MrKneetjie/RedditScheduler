@@ -18,10 +18,10 @@ module.exports = {
     ],
 
     find: [ aggregate ],
-    get: [ cleanAccount ],
+    get: [],
     create: [ addUser, creationQuota ],    
     update: [],
-    patch: [],
+    patch: [ cleanAccount ],
     remove: []
   },
 

@@ -151,7 +151,10 @@ export default {
     },
 
     clean(acc){
-      feathersClient.service('accounts').get(acc).then(data => console.log(data));
+      console.log(acc.username);
+      console.log(acc.accessToken);
+      console.log(acc.refreshToken);
+      feathersClient.service('accounts').patch(acc, { username: acc.username, accesToken: acc.accessToken, refreshToken: acc.refreshToken }).then(data => console.log(data));
       // Maybe popup succes ? idk
     }
   }
