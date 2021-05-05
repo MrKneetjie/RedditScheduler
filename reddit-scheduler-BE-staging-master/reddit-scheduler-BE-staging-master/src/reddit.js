@@ -45,6 +45,7 @@ const linkPostSubmit = async (app, post) => {
     postResult.updates.error = 'account not exists: ' + post.account;
     return postResult;
   }
+  console.log("TEST:" + post.account.refreshToken);
   const r = new snoowrap({...defaultRedditClient(app), refreshToken: post.account.refreshToken});
   try {
     const submission = await r.submitLink({
@@ -70,9 +71,22 @@ const cleanFullAccount = async (app, account) => {
   console.log("refreshToken: " + account.refreshToken);
   const r = new snoowrap({...defaultRedditClient(app), refreshToken: account.refreshToken});
   try {
-    const submission = await r.getUser('spez').getSubmissions().then(console.log);
+    const result = await r.getUser(account.username).getSubmissions().then(submissions => { 
+      for (let index = 0; index < submissions.length; index++) {
+        const element = submissions[index];
+        element.delete();
+      }
+    });
+
+    const result2 = await r.getUser(account.username).getComments().then(comments => { 
+      for (let index = 0; index < comments.length; index++) {
+        const element = comments[index];
+        element.delete();
+      }
+    });
   }
   catch(err){
+    // IF 400 ACC PROBABLY BANNED OR REMOVED
     console.log(err.message);
   }
 };
