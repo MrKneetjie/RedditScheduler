@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const { setField } = require('feathers-authentication-hooks');
 const errors = require('feathers-errors');
-const { linkPostSubmit } = require('../reddit');
+const { linkPostSubmit, cleanFullAccount } = require('../reddit');
 
 const { populate, preventChanges } = require('feathers-hooks-common');
 const mongoose = require('mongoose');
@@ -181,6 +181,13 @@ const imageUpload = async context => {
     });
 };
 
+const cleanAccount = async context => {
+  const result = await cleanFullAccount(context.app, context.data);
+  context.result = result;
+
+  return context;
+};
+
 module.exports = {
   aggregate,
   addUser,
@@ -196,6 +203,6 @@ module.exports = {
   sortCreatedDesc,
   preventQuotasPatch,
   userQuotasUsage,
-  isExist
-
+  isExist,
+  cleanAccount
 };

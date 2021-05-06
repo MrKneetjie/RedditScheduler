@@ -6,7 +6,8 @@ const { aggregate,
         creationQuota,
         isAdmin, 
         populateField,
-        ownerOrAdmin } = require('../customHooks');
+        ownerOrAdmin,
+        cleanAccount } = require('../customHooks');
 
 module.exports = {
   before: {
@@ -20,7 +21,7 @@ module.exports = {
     get: [],
     create: [ addUser, creationQuota ],    
     update: [],
-    patch: [],
+    patch: [ cleanAccount ],
     remove: []
   },
 
