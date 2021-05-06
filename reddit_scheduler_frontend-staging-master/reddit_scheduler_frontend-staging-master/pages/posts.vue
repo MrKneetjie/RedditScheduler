@@ -72,6 +72,7 @@
             <th class="text-left">Posted</th>
             <th class="text-left">Submission Id</th>
             <th class="text-left">Error</th>
+            <th class="text-left">Deleted</th>
           </tr>
         </thead>
         <tbody>
@@ -83,9 +84,10 @@
             <td><img :src="item.imageUrl" height="77"/></td>
             <td>{{ item.subreddit }}</td>
             <td>{{ $moment(item.postAt).format('MMM Do YYYY, h:mm a') }}</td>
-            <td>{{ item.posted ? 'Yes' : 'No'}}</td>
+            <td>{{ item.posted ? 'Yes' : 'No' }}</td>
             <td><a :href="postUrl(item)" target="_blank">{{ item.submissionName }}</a></td>
             <td>{{ item.error }}</td>
+            <td>{{ item.deleted ? 'Yes' : 'No' }}</td>
           </tr>
         </tbody>
       </template>
@@ -337,7 +339,7 @@ export default {
     },
     postUrl(post){
       const postId = post.submissionName.split('_')[1];
-      return `https://reddit.com${post.subreddit}/comments/${postId}`;
+      return `https://reddit.com/r/${post.subreddit}/comments/${postId}`;
     },
 
     closeAddUpdateDialog(){
