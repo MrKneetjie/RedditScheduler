@@ -1,19 +1,16 @@
 <template>
   <v-container class="full-height d-flex justify-center align-center" fluid>
-    <sign-up/>
-    <ForgetPassword/>
+    <Landing/>
   </v-container>
 </template>
 
 <script>
 
-import Login from '@/components/Login';
-import ForgetPassword from '@/components/Password';
-import SignUp from '@/components/SignUp';
+import Landing from '@/components/Landing';
 
 
 export default {
   name: 'home',
-  components: { Login, SignUp ,ForgetPassword }
+  components: { Landing }
 }
 </script>
