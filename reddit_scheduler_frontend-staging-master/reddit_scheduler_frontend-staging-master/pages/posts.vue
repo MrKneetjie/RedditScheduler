@@ -71,6 +71,7 @@
             <th class="text-left">Scheduled At</th>
             <th class="text-left">Posted</th>
             <th class="text-left">Submission Id</th>
+            <th class="text-left">Analytics</th>
             <th class="text-left">Error</th>
             <th class="text-left">Deleted</th>
           </tr>
@@ -86,6 +87,7 @@
             <td>{{ $moment(item.postAt).format('MMM Do YYYY, h:mm a') }}</td>
             <td>{{ item.posted ? 'Yes' : 'No' }}</td>
             <td><a :href="postUrl(item)" target="_blank">{{ item.submissionName }}</a></td>
+            <td><div class="analytic"><img src="../static/upvote.png" alt=""><p>{{ (item.upvotes != null) ? item.upvotes : '0' }}</p></div><div class="analytic"><img src="../static/comment.png" alt=""><p>{{  (item.comments != null) ? item.comments : '0'  }}</p></div></td>
             <td>{{ item.error }}</td>
             <td>{{ item.deleted ? 'Yes' : 'No' }}</td>
           </tr>
@@ -444,4 +446,22 @@ td img {
   text-overflow: ellipsis;
 }
 
+.analytic {
+  width: 50px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  line-height: 26px;
+}
+
+.analytic p {
+  margin: auto;
+}
+
+.analytic img {
+  width: 25px;
+  height: 25px;
+}
 </style>

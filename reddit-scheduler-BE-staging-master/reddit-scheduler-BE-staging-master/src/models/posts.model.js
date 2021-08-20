@@ -22,7 +22,9 @@ module.exports = function (app) {
     user: { type: Schema.Types.ObjectId, ref: 'Users' },
     account: { type: Schema.Types.ObjectId, ref: 'Accounts' },
     posted: { type: Boolean, default: false },
-    deleted: { type: Boolean, default: false }
+    deleted: { type: Boolean, default: false },
+    upvotes: { type: Number },
+    comments: { type: Number }
   }, {
     timestamps: true
   });

@@ -102,7 +102,17 @@ const deletedPostSubmit = async (app, post) => {
   try {
     const name = await r.getSubmission(post.submissionName).author.name;
     const indexable = await r.getSubmission(post.submissionName).is_robot_indexable;
-    console.log(indexable);
+
+    const upvotes = await r.getSubmission(post.submissionName).ups;
+    const downvotes = await r.getSubmission(post.submissionName).downs;
+    const votes = upvotes - downvotes;
+
+    const comments = await r.getSubmission(post.submissionName).comments.length;
+    console.log("votes: " + votes);
+    console.log("comments: " + comments);
+    postResult.updates.upvotes = votes;
+    postResult.updates.comments = comments;
+    
     if (indexable == false) {
       postResult.updates.deleted = true;
     }
