@@ -6,6 +6,7 @@ const auth = makeAuthPlugin({
   entityIdField: 'id',
   state: {
     publicPages: [
+      'index',
       'login',
       'signup',
       'password',
